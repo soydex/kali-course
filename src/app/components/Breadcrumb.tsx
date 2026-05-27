@@ -10,9 +10,15 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
+  homeHref: string;
+  homeLabel: string;
 }
 
-export default function Breadcrumb({ items }: BreadcrumbProps) {
+export default function Breadcrumb({
+  items,
+  homeHref,
+  homeLabel,
+}: BreadcrumbProps) {
   return (
     <nav
       aria-label="Breadcrumb"
@@ -30,10 +36,10 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
       <span className="shrink-0 text-zinc-800 font-light">/</span>
 
       <Link
-        href="/"
+        href={homeHref}
         className="shrink-0 hover:text-white transition-colors duration-150"
       >
-        cours
+        {homeLabel}
       </Link>
 
       {items.map((item, i) => (

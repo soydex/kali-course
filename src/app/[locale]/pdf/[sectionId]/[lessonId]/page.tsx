@@ -1,14 +1,15 @@
-import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { getSection } from "@/lib/course";
+import Link from "next/link";
 import { notFound } from "next/navigation";
+import { getSection } from "@/lib/course";
+import type { Locale } from "@/lib/i18n";
 
 export default async function PdfViewerPage({
   params,
 }: {
-  params: Promise<{ sectionId: string; lessonId: string }>;
+  params: Promise<{ locale: Locale; sectionId: string; lessonId: string }>;
 }) {
-  const { sectionId, lessonId } = await params;
+  const { locale, sectionId, lessonId } = await params;
   const section = getSection(sectionId);
   if (!section) notFound();
 
@@ -18,13 +19,15 @@ export default async function PdfViewerPage({
   const pdfResource = lesson.resources.find((r) => r.type === "pdf");
   if (!pdfResource) notFound();
 
+  const backHref = lesson.hasContent
+    ? `/${locale}/${sectionId}/${lessonId}`
+    : `/${locale}/${sectionId}`;
+
   return (
     <main className="h-screen bg-black flex flex-col">
       <div className="flex items-center gap-4 px-8 py-4 shrink-0">
         <Link
-          href={
-            lesson.hasContent ? `/${sectionId}/${lessonId}` : `/${sectionId}`
-          }
+          href={backHref}
           className="flex items-center gap-2 text-zinc-600 hover:text-white font-mono text-sm transition-colors duration-150"
         >
           <ArrowLeft size={14} strokeWidth={1} />

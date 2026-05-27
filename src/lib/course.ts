@@ -23,11 +23,20 @@ export interface Section {
   lessons: Lesson[];
 }
 
+export interface LessonRef {
+  sectionId: string;
+  lessonId: string;
+  title: string;
+}
+
 function extractUrl(htmlPath: string): string | null {
   const content = fs.readFileSync(htmlPath, "utf-8");
   const match = content.match(/window\.location\s*=\s*["']([^"']+)["']/);
   return match?.[1] ?? null;
 }
+
+const isDefaultTxt = (f: string) =>
+  f.endsWith(".txt") && !/\.[a-z]{2}\.txt$/.test(f);
 
 export function getSections(): Section[] {
   const entries = fs.readdirSync(COURSE_DIR, { withFileTypes: true });
@@ -50,10 +59,13 @@ export function getSections(): Section[] {
 
     const sectionPath = path.join(COURSE_DIR, dir);
     const files = fs.readdirSync(sectionPath);
-
     const lessonMap = new Map<string, Lesson>();
 
     for (const file of files) {
+      const isTxt = isDefaultTxt(file);
+      const isMp4 = file.endsWith(".mp4");
+      if (!isTxt && !isMp4) continue;
+
       const match = file.match(/^(\d+)\. (.+)\.(txt|mp4)$/);
       if (!match) continue;
       const [, lessonId, lessonTitle, ext] = match;
@@ -108,12 +120,6 @@ export function getSection(id: string): Section | null {
   return getSections().find((s) => s.id === id) ?? null;
 }
 
-export interface LessonRef {
-  sectionId: string;
-  lessonId: string;
-  title: string;
-}
-
 export function getAdjacentLessons(
   sectionId: string,
   lessonId: string,
@@ -137,6 +143,7 @@ export function getAdjacentLessons(
 export function getLessonContent(
   sectionId: string,
   lessonId: string,
+  locale = "fr",
 ): { title: string; content: string; resources: Resource[] } | null {
   const section = getSection(sectionId);
   if (!section) return null;
@@ -147,14 +154,28 @@ export function getLessonContent(
   const sectionPath = path.join(COURSE_DIR, section.dirName);
   const files = fs.readdirSync(sectionPath);
 
-  const file = files.find((f) => {
-    const match = f.match(/^(\d+)\. .+\.txt$/);
-    return match?.[1] === lessonId;
-  });
+  let file: string | undefined;
+
+  if (locale !== "fr") {
+    file = files.find((f) => {
+      if (!f.endsWith(`.${locale}.txt`)) return false;
+      return f.match(/^(\d+)\./)?.[1] === lessonId;
+    });
+  }
+
+  if (!file) {
+    file = files.find((f) => {
+      if (!isDefaultTxt(f)) return false;
+      return f.match(/^(\d+)\./)?.[1] === lessonId;
+    });
+  }
 
   if (!file) return null;
 
-  const title = file.replace(/\.txt$/, "").replace(/^\d+\. /, "");
+  const title = file
+    .replace(/\.[a-z]{2}\.txt$/, "")
+    .replace(/\.txt$/, "")
+    .replace(/^\d+\. /, "");
   const content = fs.readFileSync(path.join(sectionPath, file), "utf-8");
 
   return { title, content, resources: lesson.resources };

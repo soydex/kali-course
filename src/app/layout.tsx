@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Doto, Geist, Geist_Mono } from "next/font/google";
+import { headers } from "next/headers";
 import "./globals.css";
 
 const doto = Doto({
@@ -21,18 +22,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Hacking Éthique Avec Kali Linux",
   description: "Formation complète au penetration testing avec Kali Linux",
-  icons: {
-    icon: "/icon.svg",
-  },
+  icons: { icon: "/icon.svg" },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
+  const heads = await headers();
+  const pathname = heads.get("x-pathname") ?? "/fr";
+  const locale = pathname.startsWith("/en") ? "en" : "fr";
+
   return (
-    <html lang="fr">
+    <html lang={locale}>
       <body
         className={`${doto.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >

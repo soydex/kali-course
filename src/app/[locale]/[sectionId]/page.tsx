@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { getSection, getSections } from "@/lib/course";
+import { type Locale, getDict } from "@/lib/i18n";
 
 export function generateStaticParams() {
   return getSections().map((s) => ({ sectionId: s.id }));
@@ -21,15 +22,21 @@ export async function generateMetadata({
 export default async function SectionPage({
   params,
 }: {
-  params: Promise<{ sectionId: string }>;
+  params: Promise<{ locale: Locale; sectionId: string }>;
 }) {
-  const { sectionId } = await params;
+  const { locale, sectionId } = await params;
   const section = getSection(sectionId);
   if (!section) notFound();
 
+  const t = getDict(locale);
+
   return (
     <main className="min-h-screen bg-black px-16 py-20 max-w-2xl">
-      <Breadcrumb items={[{ label: section.title }]} />
+      <Breadcrumb
+        homeHref={`/${locale}`}
+        homeLabel={t.courses}
+        items={[{ label: section.title }]}
+      />
 
       <h1 className="text-white font-[family-name:var(--font-doto)] text-3xl font-light mb-16 mt-8">
         {section.title}
@@ -40,7 +47,7 @@ export default async function SectionPage({
           <div key={lesson.id} className="flex flex-col">
             {lesson.hasContent ? (
               <Link
-                href={`/${section.id}/${lesson.id}`}
+                href={`/${locale}/${section.id}/${lesson.id}`}
                 className="flex items-baseline gap-8 py-3 text-zinc-500 hover:text-white transition-colors duration-150 font-mono"
               >
                 <span className="text-xs w-5 shrink-0 tabular-nums">
@@ -61,7 +68,7 @@ export default async function SectionPage({
               resource.type === "pdf" ? (
                 <Link
                   key={resource.url}
-                  href={resource.url}
+                  href={`/${locale}${resource.url}`}
                   className="flex items-center gap-2 pl-13 py-1 text-zinc-700 hover:text-zinc-400 transition-colors duration-150 font-mono text-xs"
                 >
                   <FileText size={11} strokeWidth={1} />
