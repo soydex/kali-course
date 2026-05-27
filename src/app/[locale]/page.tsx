@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { getSections } from "@/lib/course";
-import { type Locale } from "@/lib/i18n";
 import Kali from "@/app/components/ui";
+import { getSections } from "@/lib/course";
+import type { Locale } from "@/lib/i18n";
 
 export async function generateMetadata({
   params,

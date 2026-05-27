@@ -10,7 +10,7 @@ export default async function PdfViewerPage({
   params: Promise<{ locale: Locale; sectionId: string; lessonId: string }>;
 }) {
   const { locale, sectionId, lessonId } = await params;
-  const section = getSection(sectionId);
+  const section = getSection(sectionId, locale);
   if (!section) notFound();
 
   const lesson = section.lessons.find((l) => l.id === lessonId);

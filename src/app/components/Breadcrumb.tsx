@@ -33,7 +33,9 @@ export default function Breadcrumb({
         <ArrowLeft size={14} strokeWidth={1} />
       </button>
 
-      <span className="shrink-0 text-zinc-600 font-light" aria-hidden="true">/</span>
+      <span className="shrink-0 text-zinc-600 font-light" aria-hidden="true">
+        /
+      </span>
 
       <Link
         href={homeHref}
@@ -44,7 +46,12 @@ export default function Breadcrumb({
 
       {items.map((item, i) => (
         <div key={item.label} className="flex items-center gap-2 min-w-0">
-          <span className="shrink-0 text-zinc-600 font-light" aria-hidden="true">/</span>
+          <span
+            className="shrink-0 text-zinc-600 font-light"
+            aria-hidden="true"
+          >
+            /
+          </span>
           {item.href ? (
             <Link
               href={item.href}

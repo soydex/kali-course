@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import { getSection, getSections } from "@/lib/course";
-import { type Locale, getDict } from "@/lib/i18n";
+import { getDict, type Locale } from "@/lib/i18n";
 
 export function generateStaticParams() {
   return getSections("fr").map((s) => ({ sectionId: s.id }));

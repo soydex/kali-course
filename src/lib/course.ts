@@ -91,7 +91,10 @@ export function getSections(locale = "fr"): Section[] {
       const [, lessonId, lessonTitle, ext] = match;
       const existing = lessonMap.get(lessonId);
       if (!existing || ext === "txt") {
-        const frTitle = lessonTitle.replace(/ - /g, " — ").replace(/\s+/g, " ").trim();
+        const frTitle = lessonTitle
+          .replace(/ - /g, " — ")
+          .replace(/\s+/g, " ")
+          .trim();
         lessonMap.set(lessonId, {
           id: lessonId,
           title: lessonTitles[id]?.[lessonId] ?? frTitle,
@@ -144,8 +147,9 @@ export function getSection(id: string, locale = "fr"): Section | null {
 export function getAdjacentLessons(
   sectionId: string,
   lessonId: string,
+  locale = "fr",
 ): { prev: LessonRef | null; next: LessonRef | null } {
-  const all = getSections().flatMap((s) =>
+  const all = getSections(locale).flatMap((s) =>
     s.lessons
       .filter((l) => l.hasContent)
       .map((l) => ({ sectionId: s.id, lessonId: l.id, title: l.title })),
@@ -166,7 +170,7 @@ export function getLessonContent(
   lessonId: string,
   locale = "fr",
 ): { title: string; content: string; resources: Resource[] } | null {
-  const section = getSection(sectionId);
+  const section = getSection(sectionId, locale);
   if (!section) return null;
 
   const lesson = section.lessons.find((l) => l.id === lessonId);

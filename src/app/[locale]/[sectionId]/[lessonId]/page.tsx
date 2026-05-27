@@ -8,7 +8,7 @@ import {
   getSection,
   getSections,
 } from "@/lib/course";
-import { type Locale, getDict } from "@/lib/i18n";
+import { getDict, type Locale } from "@/lib/i18n";
 
 export function generateStaticParams() {
   return getSections().flatMap((s) =>
@@ -27,7 +27,7 @@ export async function generateMetadata({
   const lesson = getLessonContent(sectionId, lessonId, locale);
   const title = lesson?.title ?? "Leçon";
   const description = lesson?.content
-    ? lesson.content.slice(0, 160).replace(/\s+/g, " ").trimEnd() + "…"
+    ? `${lesson.content.slice(0, 160).replace(/\s+/g, " ").trimEnd()}…`
     : undefined;
   return {
     title,
@@ -40,7 +40,11 @@ export async function generateMetadata({
         "x-default": `/fr/${sectionId}/${lessonId}`,
       },
     },
-    openGraph: { url: `/${locale}/${sectionId}/${lessonId}`, title, description },
+    openGraph: {
+      url: `/${locale}/${sectionId}/${lessonId}`,
+      title,
+      description,
+    },
   };
 }
 
@@ -51,13 +55,13 @@ export default async function LessonPage({
 }) {
   const { locale, sectionId, lessonId } = await params;
 
-  const section = getSection(sectionId);
+  const section = getSection(sectionId, locale);
   if (!section) notFound();
 
   const lesson = getLessonContent(sectionId, lessonId, locale);
   if (!lesson) notFound();
 
-  const { prev, next } = getAdjacentLessons(sectionId, lessonId);
+  const { prev, next } = getAdjacentLessons(sectionId, lessonId, locale);
   const t = getDict(locale);
 
   const paragraphs = lesson.content
