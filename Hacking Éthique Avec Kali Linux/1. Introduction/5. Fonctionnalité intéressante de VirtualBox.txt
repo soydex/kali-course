@@ -1,0 +1,7 @@
+L'une des fonctionnalités les plus importantes de VirtualBox, c'est la fonctionnalité de Snapshot (instantané). C'est une fonctionnalité qui va vous permettre de prendre une capture de l'état actuel de votre machine virtuelle. 
+
+Par exemple, si je vais dans le menu de la machine et que je clique sur « Take Snapshot », je peux donner un nom à mon instantané, par exemple « Test d'intrusion 1 ». Si je clique sur « OK », VirtualBox va enregistrer l'état exact de la machine à cet instant précis. 
+
+Cela vous protège contre les erreurs ou la perte de données. Si vous effectuez une manipulation risquée et que vous endommagez votre système d'exploitation, vous pourrez tout simplement revenir en arrière à l'état de cet instantané. En fermant la machine, vous aurez l'option « Restore current snapshot 'Test d'intrusion 1' ». Il vous suffira de cocher cette option et de cliquer sur « OK » pour restaurer la machine à cet état. 
+
+C'est une fonction très importante : essayez de l'utiliser régulièrement, cela vous sera extrêmement utile.

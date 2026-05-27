@@ -1,0 +1,14 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-doto: var(--font-doto);
+  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans);
+}
+
+body {
+  background: #000;
+  color: #ededed;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

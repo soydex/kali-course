@@ -1,0 +1,21 @@
+What's going on guys, c'est Anis et bienvenue dans cette leçon. Je viens de me rendre compte que je n'avais pas bien clarifié le processus de gestion des adresses IP tout au long de ce cours, alors qu'il est destiné aux débutants. Dans cette leçon, je vais vous montrer comment trouver les adresses IP de vos cibles (les machines victimes) ainsi que l'adresse IP de votre machine d'attaque. 
+
+Dans ce cours, nous utilisons une machine Windows 7 ou Windows 10 comme machine victime, Kali Linux comme machine d'attaque, et macOS ou Windows pour la machine hôte. 
+
+Pour la machine Windows victime locale, pour trouver son adresse IP, c'est très simple. Il vous suffit d'aller dans le menu démarrer en bas à gauche, de taper « CMD » pour ouvrir l'invite de commandes. Dans l'invite de commandes, vous tapez la commande `ipconfig`. Cette commande va vous retourner les informations concernant la configuration de votre réseau et vous y trouverez votre adresse IP. Dans mon cas, c'est `169.254.227.77`. C'est cette adresse IP que vous utiliseriez pour attaquer la machine Windows 7 en local.
+
+Une autre alternative que j'utilise tout au long de ce cours, ce sont les machines victimes hébergées sur la plateforme TryHackMe. TryHackMe est une plateforme de CTF (Capture The Flag) que l'on utilise pour s'entraîner sur des challenges de sécurité. Il y a notamment une salle (room) qui s'appelle « Blue », que vous pouvez chercher sur TryHackMe après avoir créé un compte. Pour cela, cliquez sur « Learn », puis « Search » et tapez « Blue ». Vous trouverez le challenge nommé « Blue », qui est spécialement conçu pour apprendre à exploiter la vulnérabilité EternalBlue, que nous avons vue dans la phase d'exploitation. 
+
+Si vous lancez le challenge « Blue », vous pourrez démarrer une machine victime sur le réseau de TryHackMe. Pour pouvoir interagir avec cette machine et l'attaquer, vous devez vous connecter au réseau VPN de TryHackMe. Pour ce faire, allez dans la section « Access » de la plateforme. Vous pourrez y télécharger un fichier de configuration pour vous connecter à leur VPN. Une fois sur la page d'accès, cliquez sur le bouton de téléchargement de votre fichier de configuration.
+
+Si je vais dans mon dossier de téléchargements et que je tape `ls`, j'ai un fichier qui s'appelle `anis.ovpn` (ou le nom de votre utilisateur). C'est le fichier de configuration OpenVPN.
+
+Pour démarrer la machine victime sur TryHackMe, cliquez sur « Start Machine ». Elle sera lancée sur leur réseau et l'adresse IP s'affichera après une minute ou deux. Pour vous connecter au VPN et pouvoir attaquer cette machine depuis Kali Linux, ouvrez un terminal, passez en superutilisateur (`sudo su`) et utilisez l'utilitaire OpenVPN (installé par défaut sur Kali Linux) suivi de votre fichier de configuration : `openvpn anis.ovpn`. La connexion va s'établir. 
+
+Une fois connecté au VPN de TryHackMe, vous pouvez attaquer la machine Windows 7 fournie par la plateforme. C'est la méthode que j'utilise le plus souvent dans cette formation. Mais si vous préférez utiliser une machine virtuelle locale, je vous ai également montré comment faire en récupérant son adresse IP via `ipconfig`.
+
+Une fois la connexion VPN établie, vous verrez le message « Initialization sequence completed ». Si vous ouvrez un autre terminal et lancez la commande `ifconfig`, vous verrez une interface `tun0`. L'adresse IP associée est celle de votre machine Kali Linux sur le réseau VPN de TryHackMe. Plus haut, sur l'interface `eth0` ou `wlan0`, vous avez l'adresse IP de votre Kali Linux sur votre réseau local.
+
+Si je copie l'adresse IP de la machine cible sur TryHackMe et que je lance un `ping` pour tester la connectivité, vous pouvez voir que la machine répond correctement. Maintenant, si je coupe la connexion VPN et que je relance le `ping`, vous verrez que les paquets ne passent plus. C'est tout simplement parce que je ne suis plus sur le même réseau VPN que la machine victime.
+
+Voilà, c'est aussi simple que cela. Je vous ai présenté les deux approches : travailler sur votre réseau local avec vos propres machines virtuelles, ou travailler sur un réseau distant via le VPN de TryHackMe. Vous pouvez choisir la méthode qui vous convient le mieux. On se retrouve dans la prochaine leçon !

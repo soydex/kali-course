@@ -1,0 +1,7 @@
+What's going on guys, c'est Anis et bienvenue dans cette leçon dans laquelle je vais vous proposer un challenge pratique pour clôturer ce cours. C'est un exercice que vous allez devoir réaliser par vous-même, en effectuant un test d'intrusion complet sur le serveur vulnérable mis à votre disposition. 
+
+Vous trouverez le lien de téléchargement direct de cette machine cible dans la description. Il s'agit d'un fichier au format `.ova` que vous pouvez importer directement dans votre hyperviseur, que ce soit VirtualBox ou VMware. Une fois la machine importée, démarrez-la et commencez votre audit. 
+
+Votre mission consiste à documenter pas à pas vos étapes et à rédiger un rapport détaillé de votre processus. Vous devrez identifier les failles présentes, les exploiter à distance, et documenter la manière dont vous avez obtenu vos accès. Une fois terminé, envoyez-moi votre rapport de test d'intrusion à mon adresse e-mail : `anas@hackinggeek.com`. Je prendrai le temps de le lire, de vous évaluer et de vous faire un retour personnalisé avec vos points forts, vos axes d'amélioration et des conseils pour la suite. Vous pouvez rédiger ce rapport en français ou en anglais, j'accepte les deux langues. 
+
+Je vous invite chaleureusement à réaliser ce challenge pratique. C'est le meilleur moyen d'évaluer concrètement toutes les connaissances et compétences que vous avez acquises tout au long de cette formation. J'attends vos rapports avec impatience. On se retrouve très bientôt pour de prochains cours. Peace !
