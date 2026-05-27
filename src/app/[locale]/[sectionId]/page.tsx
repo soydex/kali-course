@@ -48,7 +48,7 @@ export default async function SectionPage({
             {lesson.hasContent ? (
               <Link
                 href={`/${locale}/${section.id}/${lesson.id}`}
-                className="flex items-baseline gap-8 py-3 text-zinc-500 hover:text-white transition-colors duration-150 font-mono"
+                className="flex items-baseline gap-8 py-3 text-zinc-400 hover:text-white transition-colors duration-150 font-mono"
               >
                 <span className="text-xs w-5 shrink-0 tabular-nums">
                   {lesson.id}
@@ -56,7 +56,10 @@ export default async function SectionPage({
                 <span>{lesson.title}</span>
               </Link>
             ) : (
-              <div className="flex items-baseline gap-8 py-3 text-zinc-800 font-mono">
+              <div
+                className="flex items-baseline gap-8 py-3 text-zinc-600 font-mono select-none"
+                aria-disabled="true"
+              >
                 <span className="text-xs w-5 shrink-0 tabular-nums">
                   {lesson.id}
                 </span>
@@ -69,7 +72,7 @@ export default async function SectionPage({
                 <Link
                   key={resource.url}
                   href={`/${locale}${resource.url}`}
-                  className="flex items-center gap-2 pl-13 py-1 text-zinc-700 hover:text-zinc-400 transition-colors duration-150 font-mono text-xs"
+                  className="flex items-center gap-2 pl-13 py-1 text-zinc-400 hover:text-white transition-colors duration-150 font-mono text-xs"
                 >
                   <FileText size={11} strokeWidth={1} />
                   {resource.title}
@@ -80,7 +83,7 @@ export default async function SectionPage({
                   href={resource.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 pl-13 py-1 text-zinc-700 hover:text-zinc-400 transition-colors duration-150 font-mono text-xs"
+                  className="flex items-center gap-2 pl-13 py-1 text-zinc-400 hover:text-white transition-colors duration-150 font-mono text-xs"
                 >
                   <ExternalLink size={11} strokeWidth={1} />
                   {resource.title}

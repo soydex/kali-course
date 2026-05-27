@@ -26,7 +26,7 @@ export default async function Home({
           <Link
             key={section.id}
             href={`/${locale}/${section.id}`}
-            className="flex items-baseline gap-8 py-3 text-zinc-500 hover:text-white transition-colors duration-150 font-mono"
+            className="flex items-baseline gap-8 py-3 text-zinc-400 hover:text-white transition-colors duration-150 font-mono"
           >
             <span className="text-xs w-5 shrink-0 tabular-nums">
               {section.id.padStart(2, "0")}
@@ -36,15 +36,15 @@ export default async function Home({
         ))}
       </nav>
 
-      <div className="mt-16 flex gap-4 font-mono text-xs text-zinc-800">
+      <div className="mt-16 flex gap-4 font-mono text-xs">
         {(["fr", "en"] as const).map((l) => (
           <Link
             key={l}
             href={`/${l}`}
             className={
               l === locale
-                ? "text-zinc-500"
-                : "hover:text-zinc-500 transition-colors"
+                ? "text-white cursor-default"
+                : "text-zinc-400 hover:text-white transition-colors"
             }
           >
             {l}

@@ -22,18 +22,18 @@ export default function Breadcrumb({
   return (
     <nav
       aria-label="Breadcrumb"
-      className="flex items-center gap-2 font-mono text-sm mb-16 text-zinc-600 select-none min-w-0 overflow-hidden"
+      className="flex items-center gap-2 font-mono text-sm mb-16 text-zinc-400 select-none min-w-0 overflow-hidden"
     >
       <button
         onClick={() => window.history.back()}
-        className="shrink-0 flex items-center justify-center text-zinc-600 hover:text-white transition-colors duration-150 cursor-pointer"
+        className="shrink-0 flex items-center justify-center text-zinc-400 hover:text-white transition-colors duration-150 cursor-pointer"
         aria-label="Retour"
         type="button"
       >
         <ArrowLeft size={14} strokeWidth={1} />
       </button>
 
-      <span className="shrink-0 text-zinc-800 font-light">/</span>
+      <span className="shrink-0 text-zinc-600 font-light" aria-hidden="true">/</span>
 
       <Link
         href={homeHref}
@@ -44,7 +44,7 @@ export default function Breadcrumb({
 
       {items.map((item, i) => (
         <div key={item.label} className="flex items-center gap-2 min-w-0">
-          <span className="shrink-0 text-zinc-800 font-light">/</span>
+          <span className="shrink-0 text-zinc-600 font-light" aria-hidden="true">/</span>
           {item.href ? (
             <Link
               href={item.href}

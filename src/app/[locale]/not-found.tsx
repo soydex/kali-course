@@ -9,7 +9,7 @@ export default function NotFound() {
       </h1>
       <Link
         href="/"
-        className="flex items-center gap-2 text-zinc-600 hover:text-white font-mono text-sm transition-colors duration-150"
+        className="flex items-center gap-2 text-zinc-400 hover:text-white font-mono text-sm transition-colors duration-150"
       >
         <ArrowLeft size={14} strokeWidth={1} />
         cours

@@ -83,7 +83,7 @@ export default async function LessonPage({
               <Link
                 key={resource.url}
                 href={`/${locale}${resource.url}`}
-                className="flex items-center gap-2 text-zinc-700 hover:text-zinc-400 transition-colors duration-150 font-mono text-xs"
+                className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-150 font-mono text-xs"
               >
                 <FileText size={11} strokeWidth={1} />
                 {resource.title}
@@ -94,7 +94,7 @@ export default async function LessonPage({
                 href={resource.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-zinc-700 hover:text-zinc-400 transition-colors duration-150 font-mono text-xs"
+                className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-150 font-mono text-xs"
               >
                 <ExternalLink size={11} strokeWidth={1} />
                 {resource.title}
@@ -108,7 +108,7 @@ export default async function LessonPage({
         {prev ? (
           <Link
             href={`/${locale}/${prev.sectionId}/${prev.lessonId}`}
-            className="flex items-center gap-2 text-zinc-600 hover:text-white transition-colors duration-150 min-w-0"
+            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-150 min-w-0"
           >
             <ArrowLeft size={14} strokeWidth={1} className="shrink-0" />
             <span className="truncate">{prev.title}</span>
@@ -120,7 +120,7 @@ export default async function LessonPage({
         {next ? (
           <Link
             href={`/${locale}/${next.sectionId}/${next.lessonId}`}
-            className="flex items-center gap-2 text-zinc-600 hover:text-white transition-colors duration-150 min-w-0 text-right"
+            className="flex items-center gap-2 text-zinc-400 hover:text-white transition-colors duration-150 min-w-0 text-right"
           >
             <span className="truncate">{next.title}</span>
             <ArrowRight size={14} strokeWidth={1} className="shrink-0" />

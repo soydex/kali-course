@@ -28,12 +28,12 @@ export default async function PdfViewerPage({
       <div className="flex items-center gap-4 px-8 py-4 shrink-0">
         <Link
           href={backHref}
-          className="flex items-center gap-2 text-zinc-600 hover:text-white font-mono text-sm transition-colors duration-150"
+          className="flex items-center gap-2 text-zinc-400 hover:text-white font-mono text-sm transition-colors duration-150"
         >
           <ArrowLeft size={14} strokeWidth={1} />
           {lesson.hasContent ? lesson.title : section.title}
         </Link>
-        <span className="text-zinc-800 font-mono text-xs ml-auto">
+        <span className="text-zinc-400 font-mono text-xs ml-auto">
           {pdfResource.title}
         </span>
       </div>
