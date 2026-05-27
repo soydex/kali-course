@@ -1,4 +1,4 @@
-What's going on guys, c'est Anis et bienvenue dans cette leçon. Je viens de me rendre compte que je n'avais pas bien clarifié le processus de gestion des adresses IP tout au long de ce cours, alors qu'il est destiné aux débutants. Dans cette leçon, je vais vous montrer comment trouver les adresses IP de vos cibles (les machines victimes) ainsi que l'adresse IP de votre machine d'attaque. 
+What's going on guys, c'est Zack et bienvenue dans cette leçon. Je viens de me rendre compte que je n'avais pas bien clarifié le processus de gestion des adresses IP tout au long de ce cours, alors qu'il est destiné aux débutants. Dans cette leçon, je vais vous montrer comment trouver les adresses IP de vos cibles (les machines victimes) ainsi que l'adresse IP de votre machine d'attaque. 
 
 Dans ce cours, nous utilisons une machine Windows 7 ou Windows 10 comme machine victime, Kali Linux comme machine d'attaque, et macOS ou Windows pour la machine hôte. 
 
@@ -8,9 +8,9 @@ Une autre alternative que j'utilise tout au long de ce cours, ce sont les machin
 
 Si vous lancez le challenge « Blue », vous pourrez démarrer une machine victime sur le réseau de TryHackMe. Pour pouvoir interagir avec cette machine et l'attaquer, vous devez vous connecter au réseau VPN de TryHackMe. Pour ce faire, allez dans la section « Access » de la plateforme. Vous pourrez y télécharger un fichier de configuration pour vous connecter à leur VPN. Une fois sur la page d'accès, cliquez sur le bouton de téléchargement de votre fichier de configuration.
 
-Si je vais dans mon dossier de téléchargements et que je tape `ls`, j'ai un fichier qui s'appelle `anis.ovpn` (ou le nom de votre utilisateur). C'est le fichier de configuration OpenVPN.
+Si je vais dans mon dossier de téléchargements et que je tape `ls`, j'ai un fichier qui s'appelle `zack.ovpn` (ou le nom de votre utilisateur). C'est le fichier de configuration OpenVPN.
 
-Pour démarrer la machine victime sur TryHackMe, cliquez sur « Start Machine ». Elle sera lancée sur leur réseau et l'adresse IP s'affichera après une minute ou deux. Pour vous connecter au VPN et pouvoir attaquer cette machine depuis Kali Linux, ouvrez un terminal, passez en superutilisateur (`sudo su`) et utilisez l'utilitaire OpenVPN (installé par défaut sur Kali Linux) suivi de votre fichier de configuration : `openvpn anis.ovpn`. La connexion va s'établir. 
+Pour démarrer la machine victime sur TryHackMe, cliquez sur « Start Machine ». Elle sera lancée sur leur réseau et l'adresse IP s'affichera après une minute ou deux. Pour vous connecter au VPN et pouvoir attaquer cette machine depuis Kali Linux, ouvrez un terminal, passez en superutilisateur (`sudo su`) et utilisez l'utilitaire OpenVPN (installé par défaut sur Kali Linux) suivi de votre fichier de configuration : `openvpn zack.ovpn`. La connexion va s'établir. 
 
 Une fois connecté au VPN de TryHackMe, vous pouvez attaquer la machine Windows 7 fournie par la plateforme. C'est la méthode que j'utilise le plus souvent dans cette formation. Mais si vous préférez utiliser une machine virtuelle locale, je vous ai également montré comment faire en récupérant son adresse IP via `ipconfig`.
 

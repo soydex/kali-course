@@ -1,4 +1,4 @@
-Hey, what's going on guys, c'est Anis et bienvenue dans cette nouvelle leçon dans laquelle je vais vous donner un exercice pratique à faire. After studying our first challenge, Basic Pentesting 2, where we saw how to conduct a basic audit on a Linux system, I propose you to carry out this second challenge to test your skills. 
+Hey, what's going on guys, c'est Zack et bienvenue dans cette nouvelle leçon dans laquelle je vais vous donner un exercice pratique à faire. After studying our first challenge, Basic Pentesting 2, where we saw how to conduct a basic audit on a Linux system, I propose you to carry out this second challenge to test your skills. 
 
 This challenge is titled "Basic Pentesting 1". You can find it on VulnHub (I'll put the link in the description) to download the virtual machine. On the VulnHub page, you will find all the details of the challenge: its title, its release date, etc. It is from the same creator as the previous machine, Josiah Pearce, who designed both boxes (Basic Pentesting 1 and 2). Click on the download link to retrieve the virtual machine image, which is about 2.6 GB. 
 

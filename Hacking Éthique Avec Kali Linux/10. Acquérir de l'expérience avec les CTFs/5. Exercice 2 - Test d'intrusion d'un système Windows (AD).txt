@@ -1,4 +1,4 @@
-What's going on guys, c'est Anis et bienvenue dans cette nouvelle leçon dans laquelle je vais vous proposer un deuxième exercice concernant les tests d'intrusion sur l'Active Directory (AD). 
+What's going on guys, c'est Zack et bienvenue dans cette nouvelle leçon dans laquelle je vais vous proposer un deuxième exercice concernant les tests d'intrusion sur l'Active Directory (AD). 
 
 Dans la leçon précédente, nous avons vu le challenge « Services » et étudié comment mener un test d'intrusion basique sur un contrôleur de domaine. Aujourd'hui, avec ce nouveau challenge appelé « Razorback » (toujours disponible sur TryHackMe), vous allez devoir faire la même chose, c'est-à-dire évaluer la sécurité d'un contrôleur de domaine. La particularité de ce challenge est qu'il est structuré sous forme d'une série de questions guidées. Plus vous répondrez à ces questions, plus vous progresserez dans votre test d'intrusion jusqu'à obtenir les privilèges d'administration suprêmes (SYSTEM) sur le contrôleur de domaine. 
 

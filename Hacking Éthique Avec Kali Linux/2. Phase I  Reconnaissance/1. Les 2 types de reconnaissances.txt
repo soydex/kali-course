@@ -2,7 +2,7 @@ Une fois que vous avez installé votre système d'exploitation Kali Linux, vous 
 
 Nous allons commencer par la première phase : la reconnaissance. Durant cette phase de reconnaissance, nous allons tout simplement essayer de récolter un maximum d'informations sur notre ou nos cibles. Généralement, on divise la reconnaissance en deux parties : la reconnaissance passive et la reconnaissance active. Vous consacrerez un temps défini à la collecte d'informations passives, puis vous ferez de même pour la partie active. 
 
-Pour rester organisé, il est indispensable de documenter toutes les informations récoltées au fur et à mesure. C'est très important de savoir comment documenter ses trouvailles car à la fin de votre test d'intrusion, vous devrez rédiger un rapport. Plus votre documentation sera organisée et structurée, plus la rédaction de votre rapport sera efficace et productive. 
+Pour rester orgzacké, il est indispensable de documenter toutes les informations récoltées au fur et à mesure. C'est très important de savoir comment documenter ses trouvailles car à la fin de votre test d'intrusion, vous devrez rédiger un rapport. Plus votre documentation sera orgzackée et structurée, plus la rédaction de votre rapport sera efficace et productive. 
 
 La reconnaissance passive consiste à collecter des informations sans jamais interagir directement avec la cible. Imaginons que votre cible soit un serveur web et que vous deviez effectuer un test d'intrusion sur celui-ci. Lorsque vous commencez votre reconnaissance passive, vous ne devez en aucun cas interagir directement avec ce serveur. Vous n'allez pas lancer de scan, ni lui envoyer des paquets depuis votre adresse IP ou votre machine d'attaque. Vous allez uniquement chercher des informations accessibles publiquement, que ce soit sur les moteurs de recherche (Google, Bing, etc.) ou sur les réseaux sociaux. 
 
@@ -16,4 +16,4 @@ Dans cette phase, vous interagissez donc avec le serveur cible. Vous utiliserez 
 
 L'avantage de la reconnaissance active est qu'elle fournit des informations très précises et techniques. L'inconvénient est que vous pouvez être détecté ou bloqué par un pare-feu (firewall) ou un système de détection d'intrusion si vous envoyez un trop grand nombre de paquets suspects. Il faut donc toujours en tenir compte. La reconnaissance passive donne des résultats plus limités mais présente l'avantage d'être totalement indétectable. N'importe quelle information trouvée en ligne peut s'avérer cruciale lors de l'exploitation.
 
-Voilà pour l'organisation de notre phase de reconnaissance. Nous allons maintenant voir les outils qui vont nous aider à la réaliser.
+Voilà pour l'orgzackation de notre phase de reconnaissance. Nous allons maintenant voir les outils qui vont nous aider à la réaliser.

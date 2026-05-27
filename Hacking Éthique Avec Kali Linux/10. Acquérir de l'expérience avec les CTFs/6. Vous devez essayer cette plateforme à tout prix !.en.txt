@@ -1,4 +1,4 @@
-What's going on guys, c'est Anis et bienvenue dans cette leçon dans laquelle on va parler d'une autre plateforme de test d'intrusion et de hacking éthique. This is a platform that can really make a difference in your journey as a penetration tester. 
+What's going on guys, c'est Zack et bienvenue dans cette leçon dans laquelle on va parler d'une autre plateforme de test d'intrusion et de hacking éthique. This is a platform that can really make a difference in your journey as a penetration tester. 
 
 In a previous lesson, we talked about TryHackMe. We saw how to create an account, how to choose course rooms (rooms), CTFs, etc., and I encouraged you to do as many as possible. Today, we are interested in Hack The Box Academy. What is remarkable about Hack The Box Academy is that it is a true academy, structured like an online school to train you on both theory and practice. As a reminder, we had already mentioned the main Hack The Box platform. This one is primarily oriented towards CTFs and pure practice. We will see together how the Hack The Box ecosystem works, whether the main CTF platform or Hack The Box Academy. 
 

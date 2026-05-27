@@ -1,4 +1,4 @@
-What's going on guys, c'est Anis et bienvenue dans cette leçon dans laquelle je vais vous proposer un challenge pratique pour clôturer ce cours. This is an exercise that you will have to carry out by yourself, by performing a complete penetration testing on the vulnerable server made available to you. 
+What's going on guys, c'est Zack et bienvenue dans cette leçon dans laquelle je vais vous proposer un challenge pratique pour clôturer ce cours. This is an exercise that you will have to carry out by yourself, by performing a complete penetration testing on the vulnerable server made available to you. 
 
 You will find the direct download link for this target machine in the description. It is a file in `.ova` format that you can import directly into your hypervisor, whether it is VirtualBox or VMware. Once the machine is imported, start it and begin your audit. 
 

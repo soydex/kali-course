@@ -1,4 +1,4 @@
-What's going on guys, c'est Anis et bienvenue dans cette leçon dans laquelle je vais vous proposer un challenge pratique pour clôturer ce cours. C'est un exercice que vous allez devoir réaliser par vous-même, en effectuant un test d'intrusion complet sur le serveur vulnérable mis à votre disposition. 
+What's going on guys, c'est Zack et bienvenue dans cette leçon dans laquelle je vais vous proposer un challenge pratique pour clôturer ce cours. C'est un exercice que vous allez devoir réaliser par vous-même, en effectuant un test d'intrusion complet sur le serveur vulnérable mis à votre disposition. 
 
 Vous trouverez le lien de téléchargement direct de cette machine cible dans la description. Il s'agit d'un fichier au format `.ova` que vous pouvez importer directement dans votre hyperviseur, que ce soit VirtualBox ou VMware. Une fois la machine importée, démarrez-la et commencez votre audit. 
 

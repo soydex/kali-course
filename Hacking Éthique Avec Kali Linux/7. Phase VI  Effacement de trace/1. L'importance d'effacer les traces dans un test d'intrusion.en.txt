@@ -2,4 +2,4 @@ Once you have finished your penetration testing, it is essential to delete any t
 
 You must now go back over each system to erase your traces: modifications to the registry, generated log files, or even closing network ports that you might have opened during your tests. If you sent emails from the victim machines, they must be deleted. If you uploaded (uploader) tools or executables, as we did previously, it is imperative to delete them and stop the corresponding running processes. 
 
-If you set up persistence mechanisms, such as scheduled tasks in the Task Scheduler on Windows or cron jobs on Linux, be sure to remove them as well. By doing so, you guarantee a clean and professional penetration testing, and the defense teams (the Blue Team) of the audited network will greatly appreciate your professionalism.
+If you set up persistence mechzackms, such as scheduled tasks in the Task Scheduler on Windows or cron jobs on Linux, be sure to remove them as well. By doing so, you guarantee a clean and professional penetration testing, and the defense teams (the Blue Team) of the audited network will greatly appreciate your professionalism.

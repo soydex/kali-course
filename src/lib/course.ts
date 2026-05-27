@@ -70,7 +70,11 @@ export function getSections(locale = "fr"): Section[] {
 
   return dirs.map((dir) => {
     const id = dir.match(/^(\d+)/)?.[1] ?? dir;
-    const frTitle = dir.replace(/^\d+\.\s*/, "").replace(/\s+/g, " ").trim();
+    const frTitle = dir
+      .replace(/^\d+\.\s*/, "")
+      .replace(/\s{2,}/g, " — ")
+      .replace(/\s+/g, " ")
+      .trim();
     const title = sectionTitles[id] ?? frTitle;
 
     const sectionPath = path.join(COURSE_DIR, dir);
@@ -87,7 +91,7 @@ export function getSections(locale = "fr"): Section[] {
       const [, lessonId, lessonTitle, ext] = match;
       const existing = lessonMap.get(lessonId);
       if (!existing || ext === "txt") {
-        const frTitle = lessonTitle.replace(/\s+/g, " ").trim();
+        const frTitle = lessonTitle.replace(/ - /g, " — ").replace(/\s+/g, " ").trim();
         lessonMap.set(lessonId, {
           id: lessonId,
           title: lessonTitles[id]?.[lessonId] ?? frTitle,
@@ -193,7 +197,8 @@ export function getLessonContent(
   const frTitle = file
     .replace(/\.[a-z]{2}\.txt$/, "")
     .replace(/\.txt$/, "")
-    .replace(/^\d+\. /, "");
+    .replace(/^\d+\. /, "")
+    .replace(/ - /g, " — ");
   const title = lessonTitles[sectionId]?.[lessonId] ?? frTitle;
   const content = fs.readFileSync(path.join(sectionPath, file), "utf-8");
 

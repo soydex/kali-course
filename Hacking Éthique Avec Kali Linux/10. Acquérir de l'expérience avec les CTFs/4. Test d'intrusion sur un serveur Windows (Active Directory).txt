@@ -1,4 +1,4 @@
-What's going on guys, c'est Anis et bienvenue dans cette nouvelle leçon dans laquelle on va voir un test d'intrusion sur un système d'exploitation Windows et plus particulièrement dans un environnement Active Directory (AD). 
+What's going on guys, c'est Zack et bienvenue dans cette nouvelle leçon dans laquelle on va voir un test d'intrusion sur un système d'exploitation Windows et plus particulièrement dans un environnement Active Directory (AD). 
 
 Nous avons vu précédemment comment auditer un système Linux. Pour travailler sur Windows et ses réseaux d'entreprise, il est tout aussi important d'avoir des notions fondamentales sur le fonctionnement du système d'exploitation Windows et sur l'architecture Active Directory. L'Active Directory est un service d'annuaire développé par Microsoft qui permet aux administrateurs de centraliser et de gérer l'authentification et les autorisations (droits d'accès) des utilisateurs et des ordinateurs au sein d'un réseau local.
 
