@@ -25,7 +25,23 @@ export async function generateMetadata({
 }) {
   const { locale, sectionId, lessonId } = await params;
   const lesson = getLessonContent(sectionId, lessonId, locale);
-  return { title: lesson?.title ?? "Leçon" };
+  const title = lesson?.title ?? "Leçon";
+  const description = lesson?.content
+    ? lesson.content.slice(0, 160).replace(/\s+/g, " ").trimEnd() + "…"
+    : undefined;
+  return {
+    title,
+    description,
+    alternates: {
+      canonical: `/${locale}/${sectionId}/${lessonId}`,
+      languages: {
+        fr: `/fr/${sectionId}/${lessonId}`,
+        en: `/en/${sectionId}/${lessonId}`,
+        "x-default": `/fr/${sectionId}/${lessonId}`,
+      },
+    },
+    openGraph: { url: `/${locale}/${sectionId}/${lessonId}`, title, description },
+  };
 }
 
 export default async function LessonPage({

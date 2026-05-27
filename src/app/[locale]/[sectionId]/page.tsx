@@ -12,11 +12,27 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ sectionId: string }>;
+  params: Promise<{ locale: Locale; sectionId: string }>;
 }) {
-  const { sectionId } = await params;
-  const section = getSection(sectionId);
-  return { title: section?.title ?? "Section" };
+  const { locale, sectionId } = await params;
+  const section = getSection(sectionId, locale);
+  const title = section?.title ?? "Section";
+  return {
+    title,
+    description:
+      locale === "fr"
+        ? `Leçons de la section "${title}" — formation penetration testing avec Kali Linux.`
+        : `Lessons from the "${title}" section — ethical hacking course with Kali Linux.`,
+    alternates: {
+      canonical: `/${locale}/${sectionId}`,
+      languages: {
+        fr: `/fr/${sectionId}`,
+        en: `/en/${sectionId}`,
+        "x-default": `/fr/${sectionId}`,
+      },
+    },
+    openGraph: { url: `/${locale}/${sectionId}` },
+  };
 }
 
 export default async function SectionPage({

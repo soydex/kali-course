@@ -19,10 +19,21 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+
 export const metadata: Metadata = {
-  title: "Hacking Éthique Avec Kali Linux",
-  description: "Formation complète au penetration testing avec Kali Linux",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Hacking Éthique Avec Kali Linux",
+    template: "%s — Hacking Éthique Avec Kali Linux",
+  },
+  description: "Formation complète au penetration testing avec Kali Linux.",
   icons: { icon: "/icon.svg" },
+  openGraph: {
+    siteName: "Hacking Éthique Avec Kali Linux",
+    type: "website",
+    locale: "fr_FR",
+  },
 };
 
 export default async function RootLayout({

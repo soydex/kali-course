@@ -1,7 +1,23 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getSections } from "@/lib/course";
 import { type Locale } from "@/lib/i18n";
 import Kali from "@/app/components/ui";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: Locale }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  return {
+    alternates: {
+      canonical: `/${locale}`,
+      languages: { fr: "/fr", en: "/en", "x-default": "/fr" },
+    },
+    openGraph: { url: `/${locale}` },
+  };
+}
 
 export default async function Home({
   params,
