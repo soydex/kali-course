@@ -1,0 +1,7 @@
+One of the most important features of VirtualBox is the Snapshot feature. This is a feature that will allow you to take a capture of the current state of your virtual machine. 
+
+For example, if I go to the machine menu and click on "Take Snapshot", I can give a name to my snapshot, for example "Test d'intrusion 1". If I click on "OK", VirtualBox will save the exact state of the machine at this precise moment. 
+
+This protects you against errors or data loss. If you perform a risky manipulation and damage your operating system, you can simply go back to the state of this snapshot. By closing the machine, you will have the option "Restore current snapshot 'Test d'intrusion 1'". You will just have to check this option and click on "OK" to restore the machine to this state. 
+
+This is a very important feature: try to use it regularly, it will be extremely useful to you.

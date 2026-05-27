@@ -6,7 +6,7 @@ import { getSection, getSections } from "@/lib/course";
 import { type Locale, getDict } from "@/lib/i18n";
 
 export function generateStaticParams() {
-  return getSections().map((s) => ({ sectionId: s.id }));
+  return getSections("fr").map((s) => ({ sectionId: s.id }));
 }
 
 export async function generateMetadata({
@@ -25,7 +25,7 @@ export default async function SectionPage({
   params: Promise<{ locale: Locale; sectionId: string }>;
 }) {
   const { locale, sectionId } = await params;
-  const section = getSection(sectionId);
+  const section = getSection(sectionId, locale);
   if (!section) notFound();
 
   const t = getDict(locale);

@@ -1,0 +1,11 @@
+One of the most useful Meterpreter commands for clearing tracks is the `clearev` command. This is a command that will clear all system event logs. 
+
+To give you an idea of what these logs are under Windows, you can open the Event Viewer (Event Viewer). Windows records all events occurring on the system there, mainly divided into three categories: Application (Application), Security (Security), and System (System) events. When you penetrate a Windows server, your actions inevitably generate many entries in these logs. At the end of your audit, it is necessary to clean these traces. The `clearev` command allows you to empty these logs in a single action. 
+
+Each record normally provides precise details about the action that took place at a given time. By executing the `clearev` command in your Meterpreter console, the tool will automatically clean the Application, Security, and System logs. Execution only takes a few seconds. For example, you will see a message like: "Wiping 501 records from Application, 1536 from System, 400 from Security". After this action, the target machine's Event Viewer will be emptied. 
+
+Using `clearev` automates system logs cleaning. However, you must also proceed with manual cleanups: delete the files and tools you have uploaded, close open temporary network ports, and delete emails or other data created on the machine. 
+
+If you set up persistence via the Windows Task Scheduler, you must open the scheduling console, search for your task (for example, like an update task like "ASUS Update Checker"), right-click and select "Delete" (Delete) to remove it permanently. 
+
+If your target is running Linux, you must clean the scheduled tasks in the cron table. To do this, open a terminal, type `crontab -e` (which will open the configuration file with an editor like `nano`), and simply delete the line corresponding to your persistence script before saving the file. All of these steps are essential to guarantee a clean clearing of your tracks at the end of your penetration testing.

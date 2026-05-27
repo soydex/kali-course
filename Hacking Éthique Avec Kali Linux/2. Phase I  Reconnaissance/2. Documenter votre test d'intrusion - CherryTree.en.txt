@@ -1,0 +1,7 @@
+When you launch into a penetration testing, it is essential to document step by step everything you do. The commands executed, the tools used, the resources consulted, as well as the results obtained: all of this must be kept. To do this, you can use a simple text file, or turn to software specially designed for note-taking and documentation. 
+
+One of these tools, pre-installed on Kali Linux, is called CherryTree. You can launch it from the application menu. CherryTree will greatly help you structure your research during your pentest. For example, you can create a "Reconnaissance" section in which you will paste the results of your Nmap or Nikto scans. You can organize your notes in the form of a tree structure: for example, create a main note "Reconnaissance", then sub-notes "Passive reconnaissance" and "Active reconnaissance". 
+
+Likewise, you can create an "Exploitation" section to detail your actions with Metasploit, and a sub-note to list the payloads generated with MSFvenom. 
+
+Thus, at the end of your penetration testing, when writing the final report, you will find all your information perfectly structured and organized in the same place. This will greatly facilitate your work and save you valuable time during the reporting phase. CherryTree is very easy to use. There are other alternatives you can download, but I recommend you start directly with CherryTree, which is very efficient.

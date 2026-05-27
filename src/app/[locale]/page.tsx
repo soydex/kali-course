@@ -9,7 +9,7 @@ export default async function Home({
   params: Promise<{ locale: Locale }>;
 }) {
   const { locale } = await params;
-  const sections = getSections();
+  const sections = getSections(locale);
   return (
     <main className="min-h-screen bg-black px-16 py-20 max-w-2xl">
       <div className="flex items-center gap-8 mb-20">

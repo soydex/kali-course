@@ -38,7 +38,25 @@ function extractUrl(htmlPath: string): string | null {
 const isDefaultTxt = (f: string) =>
   f.endsWith(".txt") && !/\.[a-z]{2}\.txt$/.test(f);
 
-export function getSections(): Section[] {
+interface TitlesFile {
+  sections: Record<string, string>;
+  lessons: Record<string, Record<string, string>>;
+}
+
+function getTitles(locale: string): TitlesFile {
+  const empty = { sections: {}, lessons: {} };
+  if (locale === "fr") return empty;
+  const titlesPath = path.join(COURSE_DIR, `_titles.${locale}.json`);
+  if (!fs.existsSync(titlesPath)) return empty;
+  try {
+    return JSON.parse(fs.readFileSync(titlesPath, "utf-8"));
+  } catch {
+    return empty;
+  }
+}
+
+export function getSections(locale = "fr"): Section[] {
+  const { sections: sectionTitles, lessons: lessonTitles } = getTitles(locale);
   const entries = fs.readdirSync(COURSE_DIR, { withFileTypes: true });
 
   const dirs = entries
@@ -52,10 +70,8 @@ export function getSections(): Section[] {
 
   return dirs.map((dir) => {
     const id = dir.match(/^(\d+)/)?.[1] ?? dir;
-    const title = dir
-      .replace(/^\d+\.\s*/, "")
-      .replace(/\s+/g, " ")
-      .trim();
+    const frTitle = dir.replace(/^\d+\.\s*/, "").replace(/\s+/g, " ").trim();
+    const title = sectionTitles[id] ?? frTitle;
 
     const sectionPath = path.join(COURSE_DIR, dir);
     const files = fs.readdirSync(sectionPath);
@@ -71,9 +87,10 @@ export function getSections(): Section[] {
       const [, lessonId, lessonTitle, ext] = match;
       const existing = lessonMap.get(lessonId);
       if (!existing || ext === "txt") {
+        const frTitle = lessonTitle.replace(/\s+/g, " ").trim();
         lessonMap.set(lessonId, {
           id: lessonId,
-          title: lessonTitle.replace(/\s+/g, " ").trim(),
+          title: lessonTitles[id]?.[lessonId] ?? frTitle,
           hasContent: ext === "txt",
           resources: existing?.resources ?? [],
         });
@@ -116,8 +133,8 @@ export function getSections(): Section[] {
   });
 }
 
-export function getSection(id: string): Section | null {
-  return getSections().find((s) => s.id === id) ?? null;
+export function getSection(id: string, locale = "fr"): Section | null {
+  return getSections(locale).find((s) => s.id === id) ?? null;
 }
 
 export function getAdjacentLessons(
@@ -172,10 +189,12 @@ export function getLessonContent(
 
   if (!file) return null;
 
-  const title = file
+  const { lessons: lessonTitles } = getTitles(locale);
+  const frTitle = file
     .replace(/\.[a-z]{2}\.txt$/, "")
     .replace(/\.txt$/, "")
     .replace(/^\d+\. /, "");
+  const title = lessonTitles[sectionId]?.[lessonId] ?? frTitle;
   const content = fs.readFileSync(path.join(sectionPath, file), "utf-8");
 
   return { title, content, resources: lesson.resources };

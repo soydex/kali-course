@@ -1,0 +1,13 @@
+What's going on guys, c'est Anis et bienvenue dans cette nouvelle leçon dans laquelle je vais vous proposer un deuxième exercice concernant les tests d'intrusion sur l'Active Directory (AD). 
+
+In the previous lesson, we saw the "Services" challenge and studied how to conduct a basic penetration testing on a domain controller. Today, with this new challenge called "Razorback" (still available on TryHackMe), you will have to do the same, that is to say evaluate the security of a domain controller. The particularity of this challenge is that it is structured in the form of a series of guided questions. The more you answer these questions, the more you will progress in your penetration testing until you obtain the supreme administration privileges (SYSTEM) on the domain controller. 
+
+You will find the link to this challenge in the description of this lesson. You just need to start the virtual machine and start your investigations. If you encounter difficulties, do not hesitate to ask your questions in the comments, I will be happy to guide you.
+
+Once you have succeeded in this challenge and wish to go to the next level, TryHackMe also offers complete network challenges (Networks). If you go to the "Practice" or "Learn" tabs and go all the way down, you will find the "Networks" section. Unlike classic rooms that target only a single server, these labs simulate entire corporate networks with several interconnected machines. You will find famous training networks there like Holo, Throwback, Wreath or even Breaching Active Directory. 
+
+If we take the example of "Breaching Active Directory", you will find yourself facing a complex infrastructure with multiple servers. Your role as a pentester will be to audit the security of this entire network to ultimately compromise the main domain controller (named for example `THMDC`). This is an extremely faithful simulation of what you will encounter during your real pentesting missions. I highly advise you to confront these networks, starting with Breaching Active Directory. You will find detailed explanations for each step of your progress as well as questions to guide your approach.
+
+Concerning the other networks (Holo, Throwback, Wreath), they are generally accessible with the TryHackMe premium subscription. There is also a more recent challenge, the "Red Team Capstone Challenge", but this one is reserved for Business or Education subscriptions, so we will not cover it in this course. 
+
+I invite you to carry out the Razorback challenge today before tackling these full networks. We'll meet in the next lesson. Peace.

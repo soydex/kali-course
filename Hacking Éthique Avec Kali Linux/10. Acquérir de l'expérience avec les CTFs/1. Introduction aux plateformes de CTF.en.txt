@@ -1,0 +1,37 @@
+What's going on guys, it's Anis and welcome to this new lesson in which we are going to cover a fundamental concept for your penetration tester journey. Throughout this course, we have seen different theoretical and practical aspects of cybersecurity and penetration testing. However, theory is not enough. To land a job or progress in cybersecurity, whether as a pentester, malware analyst or SOC analyst, you must acquire practical experience on different technologies. 
+
+To acquire this practical experience, two paths are open to you. The first is to set up your own physical lab by purchasing the necessary hardware and software (routers, switches, firewalls, servers, etc.). This is an excellent method, but it is extremely expensive and not everyone can afford it. The second solution, much more accessible and productive, consists of using online training platforms. These platforms host dozens of servers, operating systems (Windows, Linux, macOS) and vulnerable software for you. Some are entirely free, others offer very affordable annual subscriptions (between 100 and 200 dollars per year) to access complete labs and progress at your own pace.
+
+Among these platforms, CTF (Capture The Flag) environments are the most popular in ethical hacking. A CTF is a challenge in which you must automate your scanning, identify its flaws, exploit them to get in, and then find a file containing a unique code called a "flag" (flag) to validate your success. I mainly recommend three platforms of this type: VulnHub, Hack The Box and TryHackMe.
+
+VulnHub is an entirely free and open platform. You don't even need to create an account on it. You just have to download vulnerable virtual machines in the form of `.ova` or `.vmdk` files, import them into your local hypervisor (such as VirtualBox or VMware) and start your penetration testing. 
+
+Hack The Box and TryHackMe, on the other hand, host the machines in the cloud. Let's see on my screen how these platforms look. 
+
+First of all, VulnHub.com offers hundreds of downloadable challenges. For example, the latest machine to date is "Morphus" from the "Matrix Breakout" series. The site provides a description of the challenge, the recommended hypervisor, as well as the difficulty level (here Medium/Hard). If you are starting, I highly advise you to filter by "Easy" level to familiarize yourself with the concept of CTF. The only disadvantage of VulnHub is that it requires downloading large files, which can pose a problem if you have a limited internet connection. 
+
+Next, Hack The Box is a reference platform for cybersecurity upskilling ("Cybersecurity Upskilling Platform"). It offers several sections: Hack The Box Academy (which offers interactive course modules by topic, such as web security or reverse engineering, combining theory and practical exercises), or standalone challenges and machines to launch directly in their infrastructure. Hack The Box can, however, prove a bit complex and its annual cost for a full subscription is higher.
+
+This is why TryHackMe is my favorite and the ideal choice for beginners. It is the platform I personally use daily to keep learning and perfect my penetration testing skills. TryHackMe offers a large selection of free or paid training rooms ("rooms"). The annual subscription is very affordable (about 90 dollars per year, which can go up to 130 or 140 dollars depending on the period), which remains much cheaper than other solutions.
+
+TryHackMe now has nearly 2 million users. On your dashboard, you can see your general ranking (for example, I am currently at rank 738), your level and your points that increase with each completed room. The platform also offers a social function to add friends, track their progress and see what rooms they are training on. I will put the link to my profile in the resources if you want to add me.
+
+One of the strong points of TryHackMe is the presence of structured learning paths (Learning Paths). If you are an absolute beginner, you can follow the "Introduction to Cyber Security" path. It will guide you through the essential network and system concepts before diving into pentesting. If you prefer defense, you have the "SOC Analyst" path. These paths will lead you step by step to your goal. 
+
+You can also search for specific rooms in the "Search" tab. TryHackMe currently offers more than 630 rooms. I have completed more than 400 myself. In your searches, you can filter the difficulty to "Easy" to start. For example, the "Blue" room is an excellent exercise to learn how to exploit the EternalBlue vulnerability. 
+
+By launching the machine on TryHackMe via the green "Start Machine" button, it starts on their servers. For users with a low-power computer that cannot run virtual machines locally, TryHackMe also offers to launch a Kali Linux attack machine directly from your web browser thanks to the "Split View" function. This is an extraordinary option.
+
+To connect to TryHackMe target machines from your own Kali Linux, you must use their VPN. Go to the "Access" section to download your OpenVPN configuration file (for example `anis.ovpn`). Then open your terminal, go to your downloads folder, switch to root and run the command `openvpn anis.ovpn`. Once you see the line "Initialization sequence completed", the connection is established. You will then see your VPN IP address display in your terminal interface, which you can also validate with the `ifconfig` command on the `tun0` interface. 
+
+To verify connectivity, you can ping TryHackMe's internal IP address (`10.10.10.10`). This is an excellent reflex to have because it sometimes happens that VPN cuts occur during a CTF, preventing you from communicating with the target. Once connected, you can refresh the TryHackMe page and start auditing the target machine. 
+
+If you use the platform's attack machine in Split View, you will find all the essential security tools pre-installed there: BloodHound, Postman, Metasploit, Burp Suite, etc. 
+
+The only potential obstacle for some is that the platform is entirely in English. I highly encourage you to work on your technical English, as it is the universal language in cybersecurity. However, to start, you can use browser extensions like Google Translate to translate pages into French.
+
+Finally, TryHackMe offers a competitive ranking (Leaderboard) where you can track the best players worldwide or by country, like the famous hacker 0day. The more challenges you solve, the higher you will climb in this ranking.
+
+Training on these platforms will allow you to acquire solid skills on varied technologies: Windows Active Directory networks, Linux servers, IoT (Internet of Things), SCADA, etc. In the next lessons of this module, we are going to perform two complete penetration testings together: one on a Linux machine and the other on a Windows machine. 
+
+I let you discover the platform and create your account. If you have any questions, ask them in the comments. We'll meet in the next lesson!

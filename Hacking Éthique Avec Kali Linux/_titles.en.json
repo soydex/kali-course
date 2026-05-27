@@ -1,0 +1,68 @@
+{
+  "sections": {
+    "1": "Introduction",
+    "2": "Phase I — Reconnaissance",
+    "3": "Phase II — Scanning",
+    "4": "Phase III — Exploitation",
+    "5": "Phase IV — Post-Exploitation",
+    "6": "Phase V — Persistence",
+    "7": "Phase VI — Log Clearing",
+    "8": "Phase VII — Report",
+    "9": "Final Words",
+    "10": "Gaining Experience with CTFs",
+    "11": "Practical Challenge"
+  },
+  "lessons": {
+    "1": {
+      "1": "Introduction to the course",
+      "2": "Penetration testing methodology",
+      "3": "Setting up the attacker machine",
+      "4": "Setting up the victim machine",
+      "5": "Useful VirtualBox features",
+      "6": "How to find IP addresses",
+      "7": "Try this powerful hypervisor"
+    },
+    "2": {
+      "1": "The 2 types of reconnaissance",
+      "2": "Documenting your pentest with CherryTree",
+      "3": "Effective reconnaissance with SpiderFoot"
+    },
+    "3": {
+      "1": "Introduction to the scanning phase",
+      "2": "The powerful scanning tool — Nmap",
+      "3": "The indispensable scanner for pentesters — Nessus"
+    },
+    "4": {
+      "1": "Introduction to the exploitation phase",
+      "2": "Exploiting a remote RCE"
+    },
+    "5": {
+      "1": "The power of Meterpreter",
+      "2": "Password cracking — John the Ripper & Hashcat"
+    },
+    "6": {
+      "1": "Maintaining access on the victim machine"
+    },
+    "7": {
+      "1": "The importance of clearing traces in a pentest",
+      "2": "Clearing log traces with Clearev"
+    },
+    "8": {
+      "1": "How to write a good pentest report"
+    },
+    "9": {
+      "1": "Going further with these 3 tips"
+    },
+    "10": {
+      "1": "Introduction to CTF platforms",
+      "2": "Pentesting a Linux server",
+      "3": "Exercise 1 — Pentesting a Linux system",
+      "4": "Pentesting a Windows server (Active Directory)",
+      "5": "Exercise 2 — Pentesting a Windows system (AD)",
+      "6": "You must try this platform!"
+    },
+    "11": {
+      "1": "Pentesting a vulnerable Linux server"
+    }
+  }
+}

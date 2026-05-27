@@ -1,0 +1,7 @@
+What's going on guys, c'est Anis et bienvenue dans cette leçon dans laquelle je vais vous proposer un challenge pratique pour clôturer ce cours. This is an exercise that you will have to carry out by yourself, by performing a complete penetration testing on the vulnerable server made available to you. 
+
+You will find the direct download link for this target machine in the description. It is a file in `.ova` format that you can import directly into your hypervisor, whether it is VirtualBox or VMware. Once the machine is imported, start it and begin your audit. 
+
+Your mission consists of documenting step-by-step your stages and writing a detailed report of your process. You will need to identify the flaws present, exploit them remotely, and document how you obtained your access. Once finished, send me your penetration testing report to my email address: `anas@hackinggeek.com`. I will take the time to read it, evaluate you, and give you personalized feedback with your strengths, areas of improvement, and advice for the future. You can write this report in French or English, I accept both languages. 
+
+I warmly invite you to carry out this practical challenge. This is the best way to concretely evaluate all the knowledge and skills you have acquired throughout this training. I look forward to your reports. We will meet very soon for future courses. Peace!

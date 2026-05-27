@@ -1,0 +1,39 @@
+Super, nous avons vu les concepts généraux du scanning. Dans cette leçon, nous allons nous concentrer sur l'utilisation pratique de Nmap. 
+
+First of all, I have here a target IP address that we are going to use as an example to illustrate how Nmap works. The first thing to do is to open a terminal. I'm going to zoom in a bit. I then switch to superuser with `sudo su` or `sudo -i`, because some types of advanced scans with Nmap require root privileges to be able to send raw packets. 
+
+Nmap is installed by default on Kali Linux. If you simply type `nmap` in the terminal, you will display its help menu. This lists all the options available to extend the tool's features. Each option has a very specific role. For example, the `-Pn` option allows telling Nmap not to perform discovery ping (host discovery) and to consider that the target is active. This is very useful if the target's firewall blocks ICMP requests. You have the `-sU` option to launch a UDP scan (the default scan being TCP). The `-sV` option allows detecting the versions of services running on open ports. Finally, the `-O` option is used to attempt to identify the operating system of the target machine.
+
+Let's see some concrete examples. We are going to scan our target IP address. Let's start with a classic Nmap scan, without any additional arguments, by simply typing `nmap <adresse_IP>`. With Nmap, you can scan a single IP address, a list of addresses, or an entire network using CIDR notation (for example `/24` to scan a complete subnet). You can also scan a domain name like `google.fr`. But here, we will focus on our target IP address. 
+
+Nmap launches the analysis. The time required depends on the size and complexity of the target network's architecture. If you press the space bar during the scan, Nmap will display the progress percentage of the task. By default, Nmap performs a "SYN stealth scan" type. As a reminder, during a classic TCP connection, the protocol uses a three-step handshake process (the Three-Way Handshake): sending a SYN packet, the SYN-ACK response by the server, then sending an ACK (acknowledgement) packet by the client to initiate the data exchange. In the case of a SYN scan (or half-open scan), Nmap only sends the SYN packet. If the port is open, the server responds with a SYN-ACK. Nmap then immediately responds to it with a RST (reset) packet to cut the connection before it is completely established. This allows detecting the open port while preventing the connection from being recorded in the application's log files. 
+
+Once the scan is finished, Nmap displays the result: the IP address of the target, a mention indicating that the host is active ("host is up"), the number of closed ports, and a table listing the open ports. For each port, we find the port number, the protocol (TCP or UDP), the state ("open" for open), and the associated service by default. 
+
+This is an example of basic Nmap usage. You will find that sometimes Nmap fails to precisely identify the service running behind an open port. That's fine, we can use other options to refine the results. For example, if we want to identify the operating system of the target, we can add the `-O` option (`nmap -O <adresse_IP>`). 
+
+As mentioned before, be careful. Firewalls, IDS (Intrusion Detection Systems) and IPS (Intrusion Prevention Systems) are designed to detect suspicious activities. A port scan is generally considered an attack signature, and these defense systems can automatically block your IP address from the very first detected packets. 
+
+Here, with the `-O` option, Nmap tries to guess the operating system. OS detection results are not always absolutely precise, but here it detects a high probability of a Windows or Linux system. You can also adjust the speed of the scan with timing options from `-T0` (the slowest, to avoid detection) to `-T5` (the fastest and most aggressive). The faster the scan, the more you risk being detected or disrupting the target's services. 
+
+To get even more precise information, you can use the `-sV` option to force service version detection. This is a crucial step for our report and for the exploitation phase, because it allows us to know if obsolete and vulnerable software versions are being used. The scan with version detection takes a little more time because Nmap actively queries each open port to obtain its application banner. 
+
+In our case, Nmap reveals to us that ports 135, 139 and 445 are open. It identifies the presence of Microsoft Windows, which confirms that the target is a Windows machine. Port 3389 corresponds to the Remote Desktop service (RDP, displayed as ms-wbt-server). 
+
+All of this information must be copied and documented in your note-taking tool (like CherryTree). For example, you can create a note titled "Scanning with Nmap" and paste your results there to refer to them later during the exploitation phase. 
+
+If we look at the detailed result of our scan, we discover the machine's NetBIOS name (for example "john-PC"). Nmap also identifies Microsoft RPC (MSRPC) services on port 135 and Microsoft-DS (SMB) on port 445, typical of Windows 7 or Windows 10. 
+
+Nmap offers many other possibilities. In particular, it integrates the NSE (Nmap Scripting Engine) scripting engine, which allows automating advanced diagnostics or even vulnerability exploitation tasks. You can call these scripts using the `--script` option followed by the script name or its category.
+
+There are also evasion techniques, such as the idle scan (`-sI` option), which uses a third-party machine (called a zombie machine) to relay scan packets in order to mask your own IP address. If you are certain that a machine is active, you can also use the `-Pn` option (formerly `-PN`) to skip the discovery ping step, which allows saving time and limiting suspicious traffic. 
+
+Finally, the `-A` option allows running a complete and aggressive scan. This scan combines OS detection, service version detection, running NSE default scripts, and traceroute. Warning: do not use this option lightly because it is extremely noisy on the network and generates significant traffic that will be easily detected. Use it only when you have permission and you know it will not disrupt services. 
+
+In our example, the aggressive scan `-A` brings us very valuable information: it confirms with precision that the target system is Windows 7 Professional Service Pack 1, gives us its NetBIOS name, the workgroup name (Workgroup), and provides us with details on the SMB protocol configuration (such as the security level and whether guest connections are allowed). This is a real gold mine for a pentester. We update our CherryTree with these detailed results.
+
+If you want to target only specific ports, you can use the `-p` option. For example, `nmap -p 80 <adresse_IP>` will scan only port 80. You can specify multiple ports by separating them with commas (for example `-p 80,443,22,445`). Nmap will then concentrate all its analysis only on those ports.
+
+That's the essential of what you need to know about using Nmap for port and service scanning. To practice legally, Nmap makes available the domain name `scanme.nmap.org`. You are authorized to scan it to test the tool. On the other hand, never scan servers or domains without having received explicit written authorization. 
+
+Make sure to always document your Nmap results well to best prepare for the rest of your penetration testing.

@@ -1,0 +1,49 @@
+Now that we have seen the methodology for our penetration testing, we will have to prepare our operating systems. For this, we will use virtualization technology, which simply allows guest operating systems to run within your host operating system. For example, here, I am on Windows 10 and, thanks to virtualization and a software called a hypervisor, we can run other machines or other operating systems like macOS, Linux or Windows on the same physical machine.
+
+To start, you need to make sure that your processor supports virtualization. Generally, recent Intel and AMD processors are perfectly suitable. On my side, I use a 9th generation Intel Core i7 processor with 16 GB of RAM and Windows 10. The procedure is the same on Windows 7, Windows 8 or Windows 11.
+
+The first step consists of going to the official website virtualbox.org. VirtualBox is a hypervisor, that is to say a software that allows to virtualize the Linux machines we are going to use, as well as the target virtual machines (the victims). I chose VirtualBox because it is open source, but there are other hypervisors like VMware that you can use if you prefer. Once VirtualBox is downloaded and installed (the installation is simple and fast), you can launch it. You will arrive at an interface similar to this one. The only difference is that you will not have these virtual machines in the list yet, because these are machines that I created previously. I will show you how to create a new virtual machine for Kali Linux.
+
+The second element you need is Kali Linux. Kali Linux is a Linux distribution based on Debian, specially designed for penetration testing and security auditing. We will download it from the official website. For this, you can go to the download section, choose the installer image or the Live Boot version, then start downloading the recent version (for example 2022.4 or via a torrent file). On my side, I have already downloaded version 2022.3, so I don't need to download the next one; the differences are very subtle and you can use any recent version of Kali Linux. As I mentioned, Kali Linux already contains almost all the tools necessary to conduct a complete penetration testing on a system or a network.
+
+To create a virtual machine in VirtualBox, we will click on "New". We give it a name, for example "Penetration Testing". It is a Linux-type system, based on Debian (64-bit). We click on next. We must then allocate RAM memory; I am going to allocate 3 GB of RAM to it. If your machine is limited, 2 GB of RAM will do. Next, we click on "Next", then we choose to create a virtual hard disk now ("Create a virtual hard disk now") with a dynamically allocated size ("Dynamically allocated"). In this way, the virtual disk file will only take up space on your physical disk as it is used. For the size, 20 GB will be more than enough for this course. If you have a lot of space, you can allocate 50 or 100 GB to it, but 20 GB is enough.
+
+Our virtual machine is now created and appears in the list. There are a few configurations left to do. We click on "Settings" then on the "General" tab, "Advanced" section. Here, we will enable the shared clipboard ("Shared Clipboard") and drag-and-drop ("Drag'n'Drop") in bidirectional mode ("Bidirectional"). This will allow you to copy-paste text or drag files easily between your host machine and your virtual machine.
+
+In the "System" section, you can modify the RAM allocation or add processor cores (vCPU) to your virtual machine so that it runs faster, and then leave the rest by default.
+
+In the "Storage" section, you must attach the ISO file of Kali Linux that you downloaded. Under the IDE controller, select the empty optical drive, click on the disk icon on the right, then select your ISO file (in my case, the image of Kali 2022.3). VirtualBox will use this image to start the installation of the operating system.
+
+For the "Audio" section, leave it as default.
+
+In the "Network" tab, we will configure the network card in "Bridge Adapter" mode. We will explain in more detail how the different network modes work in the coming lessons.
+
+The "Serial Ports" and "USB" sections can be left as default. If you have an external USB Wi-Fi card or a USB key to connect to the virtual machine, this is where you can do it. You can also configure shared folders if you want to access a specific folder on your host machine (like your Desktop or your Documents) from the virtual machine.
+
+Once these configurations are finished, we click on "OK". We can now start the virtual machine.
+
+Another very simple possibility, instead of doing the full installation, is to download a pre-installed virtual machine. On the Kali Linux website, in the "Virtual Machines" section, you can download directly an image file for VirtualBox or VMware. The download is often faster and you just need to import the file into your hypervisor by double-clicking on it. The machine will then be ready to use with a configuration already done. But for this course, I will show you how to install Kali Linux step by step.
+
+So we launch the machine. In the boot menu, we choose "Graphical Install" (or "Start Installer") and we press Enter. I go to full screen and the installation process starts.
+
+We choose the installation language. I advise you to leave the system in English. Indeed, when you use Linux, especially if you are starting with the terminal, you will encounter errors. If these error messages are in English, it will be much easier for you to find solutions on Google. We therefore leave English for the system, then we configure the geographical location and the keyboard (French/AZERTY).
+
+The installer then prepares the components. During the installation, we will configure the host name of the machine (by default "kali"), leave the domain name blank, then create a user (for example "UserX") and associate a secure password with them.
+
+For disk partitioning, we choose "Guided - use entire disk", we select the 20 GB virtual disk that we created, then we choose the recommended option for beginners ("All files in one partition"). We finalize the partitioning and apply the changes by selecting "Yes" to format the disk in Ext4 and create the swap partition.
+
+The base system installation then starts. This can take between 10 and 15 minutes depending on the performance of your computer and the resources (RAM, processors) allocated to the virtual machine.
+
+If you want to deepen your knowledge of Linux, I have another complete course on Udemy dedicated to getting started with Kali Linux for beginners. There I explain in detail how the system works, the use of commands, partitioning, user management, permissions, and many other modules to acquire solid bases in Linux administration.
+
+Towards the end of the installation, the system may ask you to configure a network mirror for the APT package manager (which handles software installation under Kali). If you encounter a network problem at this stage, you can choose to continue without a network mirror by selecting "Yes" (continue without mirror). This will not pose a problem for the rest, and we can configure the network later if necessary.
+
+Next, the installer asks you to install the GRUB bootloader. The GRUB is an indispensable small program that allows starting the operating system at boot. We select "Yes", then we choose the main hard disk to install the GRUB on. Once this step is finished, the installation is finalized. You just need to restart the virtual machine.
+
+After restarting, we will be able to log in with the identifier and password configured previously. Once on the Kali Linux desktop, we will install the Guest Additions (or guest tools). These VirtualBox extensions bring indispensable features: dynamic full screen mode, shared clipboard, and bidirectional drag-and-drop.
+
+To install them, you can click in the VirtualBox menu on "Devices" then "Insert Guest Additions CD Image". This will mount a virtual CD drive containing the installation files on your system. You can double-click on the CD icon, open a terminal in this folder, switch to superuser (root) with the command `sudo -i` or `sudo su`, then execute the script with `./VBoxLinuxAdditions.run` (or `sh autorun.sh`).
+
+Another simple method via the terminal is to execute the command `sudo apt update && sudo apt install virtualbox-guest-x11`. After restarting the virtual machine, all the features of the Guest Additions will be operational.
+
+Throughout this course, we will use the tools of reconnaissance, scanning, exploitation, and post-exploitation pre-installed on Kali Linux. If you have any questions, don't hesitate to ask them in the comments. We'll meet in the next lesson. Peace!
