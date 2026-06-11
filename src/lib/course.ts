@@ -41,10 +41,11 @@ const isDefaultTxt = (f: string) =>
 interface TitlesFile {
   sections: Record<string, string>;
   lessons: Record<string, Record<string, string>>;
+  resources?: Record<string, Record<string, Record<string, string>>>;
 }
 
 function getTitles(locale: string): TitlesFile {
-  const empty = { sections: {}, lessons: {} };
+  const empty = { sections: {}, lessons: {}, resources: {} };
   if (locale === "fr") return empty;
   const titlesPath = path.join(COURSE_DIR, `_titles.${locale}.json`);
   if (!fs.existsSync(titlesPath)) return empty;
@@ -56,7 +57,11 @@ function getTitles(locale: string): TitlesFile {
 }
 
 export function getSections(locale = "fr"): Section[] {
-  const { sections: sectionTitles, lessons: lessonTitles } = getTitles(locale);
+  const {
+    sections: sectionTitles,
+    lessons: lessonTitles,
+    resources: resourceTitles,
+  } = getTitles(locale);
   const entries = fs.readdirSync(COURSE_DIR, { withFileTypes: true });
 
   const dirs = entries
@@ -107,13 +112,15 @@ export function getSections(locale = "fr"): Section[] {
     for (const file of files) {
       const match = file.match(/^(\d+)\.(\d+)\s+(.+)\.html$/);
       if (!match) continue;
-      const [, parentId, , resourceTitle] = match;
+      const [, parentId, resourceId, resourceTitle] = match;
       const lesson = lessonMap.get(parentId);
       if (!lesson) continue;
       const url = extractUrl(path.join(sectionPath, file));
       if (!url) continue;
+      const frTitle = resourceTitle.replace(/\s+/g, " ").trim();
+      const title = resourceTitles?.[id]?.[parentId]?.[resourceId] ?? frTitle;
       lesson.resources.push({
-        title: resourceTitle.replace(/\s+/g, " ").trim(),
+        title,
         url,
         type: "link",
       });
@@ -122,11 +129,13 @@ export function getSections(locale = "fr"): Section[] {
     for (const file of files) {
       const match = file.match(/^(\d+)\.(\d+)\s+(.+)\.pdf$/);
       if (!match) continue;
-      const [, parentId, , resourceTitle] = match;
+      const [, parentId, resourceId, resourceTitle] = match;
       const lesson = lessonMap.get(parentId);
       if (!lesson) continue;
+      const frTitle = resourceTitle.replace(/\s+/g, " ").trim();
+      const title = resourceTitles?.[id]?.[parentId]?.[resourceId] ?? frTitle;
       lesson.resources.push({
-        title: resourceTitle.replace(/\s+/g, " ").trim(),
+        title,
         url: `/pdf/${id}/${parentId}`,
         type: "pdf",
       });

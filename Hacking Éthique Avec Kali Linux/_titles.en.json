@@ -64,5 +64,36 @@
     "11": {
       "1": "Pentesting a vulnerable Linux server"
     }
+  },
+  "resources": {
+    "1": {
+      "2": {
+        "1": "Pentest standard"
+      },
+      "4": {
+        "1": "Download Windows"
+      }
+    },
+    "10": {
+      "2": {
+        "1": "Direct challenge link"
+      },
+      "3": {
+        "1": "Challenge link"
+      },
+      "4": {
+        "1": "OpenClassrooms AD Course",
+        "2": "HTB Academy",
+        "3": "The Services Challenge"
+      },
+      "5": {
+        "1": "Direct link to RazorBlack"
+      }
+    },
+    "11": {
+      "1": {
+        "1": "Download the vulnerable server"
+      }
+    }
   }
 }
