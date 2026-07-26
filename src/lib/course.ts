@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-const COURSE_DIR = path.join(process.cwd(), "Hacking Éthique Avec Kali Linux");
+const COURSE_DIR = path.join(process.cwd(), "hack_lessons");
 
 export interface Resource {
   title: string;
