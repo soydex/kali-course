@@ -1,0 +1,33 @@
+{
+  "resources": {
+    "1": {
+      "2": {
+        "1": "Pentest standard"
+      },
+      "4": {
+        "1": "Télécharger Windows"
+      }
+    },
+    "10": {
+      "2": {
+        "1": "Lien direct du challenge"
+      },
+      "3": {
+        "1": "Lien du challenge"
+      },
+      "4": {
+        "1": "Cours AD OpenClassrooms",
+        "2": "HTB Academy",
+        "3": "Le Challenge Services"
+      },
+      "5": {
+        "1": "Lien direct de RazorBlack"
+      }
+    },
+    "11": {
+      "1": {
+        "1": "Télécharger le serveur vulnérable"
+      }
+    }
+  }
+}

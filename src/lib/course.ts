@@ -45,12 +45,16 @@ interface TitlesFile {
 }
 
 function getTitles(locale: string): TitlesFile {
-  const empty = { sections: {}, lessons: {}, resources: {} };
-  if (locale === "fr") return empty;
+  const empty: TitlesFile = { sections: {}, lessons: {}, resources: {} };
   const titlesPath = path.join(COURSE_DIR, `_titles.${locale}.json`);
   if (!fs.existsSync(titlesPath)) return empty;
   try {
-    return JSON.parse(fs.readFileSync(titlesPath, "utf-8"));
+    const data = JSON.parse(fs.readFileSync(titlesPath, "utf-8"));
+    return {
+      sections: data.sections ?? {},
+      lessons: data.lessons ?? {},
+      resources: data.resources ?? {},
+    };
   } catch {
     return empty;
   }

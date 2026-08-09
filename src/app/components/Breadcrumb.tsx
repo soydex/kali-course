@@ -27,7 +27,7 @@ export default function Breadcrumb({
       <button
         onClick={() => window.history.back()}
         className="shrink-0 flex items-center justify-center text-zinc-400 hover:text-white transition-colors duration-150 cursor-pointer"
-        aria-label="Retour"
+        aria-label={homeLabel === "courses" ? "Back" : "Retour"}
         type="button"
       >
         <ArrowLeft size={14} strokeWidth={1} />
